@@ -1,0 +1,357 @@
+de:
+  language_name: Deutsch
+  title: "## cuFOLIO Mean-CVaR Steuerung"
+  subtitle: "Parameter einstellen, Config speichern, Lauf starten, Szenarien vergleichen und durchspielen."
+  lang_label: "Sprache"
+  sec_data: "### Daten & Laufzeit"
+  sec_cvar: "### Mean-CVaR-Parameter"
+  sec_solver: "### Solver"
+  sec_config: "### Konfiguration"
+  sec_run: "### Lauf"
+  sec_results: "### Ergebnisse"
+  cmp_header: "## Zwei Laeufe vergleichen"
+  cmp_intro: "Ablauf: einen Lauf starten und als Lauf A sichern. Parameter aendern, erneut starten, als Lauf B sichern. Dann vergleichen. Mit festem Seed sind Unterschiede allein auf die Parameter zurueckzufuehren, nicht auf Zufall."
+  tabs:
+    single: "Einzellauf"
+    sweep: "Sweep"
+  btn:
+    load: "Laden"
+    save: "Als YAML speichern"
+    gpu_check: "GPU pruefen"
+    run: "Lauf starten"
+    snap_a: "Aktuelles Ergebnis -> Lauf A"
+    snap_b: "Aktuelles Ergebnis -> Lauf B"
+    compare: "A und B vergleichen"
+  fields:
+    dataset:
+      label: "Datensatz"
+      info: "Welcher Aktienkorb optimiert wird. sp500 sind die 500 groessten US-Firmen, dow30 und sp100 kleiner, global_titans international."
+    num_scen:
+      label: "KDE-Szenarien (num_scen)"
+      info: "Anzahl simulierter Kurs-Zukuenfte. Mehr Szenarien bedeuten eine stabilere Schaetzung, aber laengere Rechenzeit. 10000 ist ein guter Standard."
+    seed:
+      label: "Seed (leer = zufaellig)"
+      info: "Fester Startwert fuer den Zufall. Gleicher Seed liefert das gleiche Ergebnis. Leer lassen fuer jedes Mal eine neue Zufallsziehung."
+    regime_start:
+      label: "Optimierung Start"
+      info: "Beginn des Zeitraums, aus dem die historischen Renditen fuer die Optimierung stammen. Hier lernt das Modell das Verhalten der Aktien."
+    regime_end:
+      label: "Optimierung Ende"
+      info: "Ende des Optimierungszeitraums."
+    test_start:
+      label: "Backtest Start"
+      info: "Beginn des Backtests. Ab hier wird das fertige Portfolio an spaeteren Kursen geprueft, die in der Optimierung nicht gesehen wurden."
+    test_end:
+      label: "Backtest Ende"
+      info: "Ende des Backtests."
+    gpu:
+      label: "GPU"
+      info: "Auf welcher Grafikkarte gerechnet wird. Auto laesst beide sichtbar. Fuer einen einzelnen Lauf reicht eine Karte."
+    no_backtest:
+      label: "Backtest ueberspringen"
+      info: "Wenn aktiv, wird nur optimiert und kein Backtest gerechnet. Schneller, aber ohne Backtest-Grafik."
+    results_dir:
+      label: "Ausgabeverzeichnis"
+      info: "Ordner fuer die Ergebnisdateien: Portfolio, Grafik und Zusammenfassung."
+    w_min_others:
+      label: "w_min (others)"
+      info: "Kleinstes erlaubtes Gewicht je Aktie als Kapitalanteil. Negativ heisst Short erlaubt, also auf fallende Kurse setzen. Gilt fuer alle Titel ohne eigene Regel."
+    w_max_others:
+      label: "w_max (others)"
+      info: "Groesstes erlaubtes Gewicht je Aktie als Kapitalanteil. 0.4 entspricht maximal 40 Prozent in einem einzelnen Titel."
+    overrides_text:
+      label: "Ticker-Overrides (je Zeile: TICKER min max)"
+      info: "Eigene Grenzen fuer einzelne Titel. Je Zeile: Kuerzel min max. Beispiel: NVDA 0.1 0.6 erlaubt NVDA zwischen 10 und 60 Prozent."
+    c_min:
+      label: "Cash min (c_min)"
+      info: "Mindestanteil an Bargeld, das nicht investiert wird."
+    c_max:
+      label: "Cash max (c_max)"
+      info: "Hoechstanteil an Bargeld. 0.2 erlaubt bis zu 20 Prozent Cash."
+    l_tar:
+      label: "Leverage (L_tar)"
+      info: "Hebel-Ziel. Summe aller Positionsgroessen relativ zum Kapital. 1.6 bedeutet 160 Prozent Brutto-Engagement aus Long und Short zusammen."
+    t_tar:
+      label: "Turnover (T_tar, leer = aus)"
+      info: "Turnover-Ziel, also wie stark umgeschichtet werden darf. Leer lassen heisst keine Begrenzung."
+    cvar_limit:
+      label: "CVaR-Limit (leer = aus)"
+      info: "Optionale harte Obergrenze fuer das Verlustrisiko CVaR. Leer heisst keine feste Grenze, das Risiko wird dann ueber die Risikoaversion gesteuert."
+    cardinality:
+      label: "Cardinality (leer = aus)"
+      info: "Optionale Obergrenze fuer die Anzahl gehaltener Titel. Leer heisst unbegrenzt."
+    risk_aversion:
+      label: "Risikoaversion"
+      info: "Wie stark Risiko bestraft wird. Hoeher ist vorsichtiger mit weniger Schwankung, niedriger ist rendite-orientierter."
+    confidence:
+      label: "Konfidenz (alpha)"
+      info: "CVaR-Konfidenz. Legt fest, auf welche schlechten Tage geschaut wird. 0.95 sind die schlimmsten 5 Prozent der Tage, 0.99 nur die extremsten 1 Prozent."
+    solver_method:
+      label: "Methode"
+      info: "Verfahren, mit dem cuOpt das Problem auf der GPU loest. PDLP ist der Standard."
+    time_limit:
+      label: "Zeitlimit (s)"
+      info: "Maximale Rechenzeit des Solvers in Sekunden."
+    optimality:
+      label: "Optimalitaet"
+      info: "Geforderte Genauigkeit der Loesung. Kleiner ist genauer, kann aber laenger dauern."
+    config_dropdown:
+      label: "Gespeicherte Configs"
+      info: "Gespeicherte Konfigurationen. Auswaehlen und Laden, um sie zurueckzuholen."
+    config_name:
+      label: "Name zum Speichern"
+      info: "Name, unter dem die aktuelle Einstellung als YAML gespeichert wird."
+  out:
+    log: "Log"
+    positions: "Optimiertes Portfolio"
+    backtest: "Backtest"
+    plot: "Backtest-Grafik"
+    cmp_config: "Unterschiede in der Konfiguration"
+    cmp_positions: "Portfolio-Vergleich"
+    cmp_backtest: "Backtest-Vergleich"
+    cmp_img_a: "Lauf A"
+    cmp_img_b: "Lauf B"
+  tbl:
+    asset: "Titel"
+    direction: "Richtung"
+    weight: "Gewicht"
+    portfolio: "Portfolio"
+    sortino: "Sortino"
+    drawdown: "Max Drawdown"
+    cash_name: "Cash"
+    cash_dir: "Liquiditaet"
+    weight_a: "Gewicht A"
+    weight_b: "Gewicht B"
+    diff: "Differenz (B-A)"
+    parameter: "Parameter"
+    metric: "Kennzahl"
+    run_a: "Lauf A"
+    run_b: "Lauf B"
+  sweep:
+    header: "## Szenarien-Sweep"
+    intro: "Variiere einen Parameter ueber mehrere Werte und starte alle Laeufe gesammelt. Mit zwei GPUs laufen die Jobs parallel. Das lohnt sich vor allem bei vielen oder rechenintensiven Szenarien. Ein einzelner Solve ist ohnehin in Sekunden fertig. Basis sind die Einstellungen aus dem Reiter Einzellauf."
+    param:
+      label: "Parameter variieren"
+      info: "Welcher Parameter ueber die Werteliste durchgespielt wird. Die Bedeutung steht beim jeweiligen Feld im Reiter Einzellauf."
+    values:
+      label: "Werte (mit Komma getrennt)"
+      info: "Liste der Werte fuer den gewaehlten Parameter. Beispiel: 0.90, 0.95, 0.99"
+    gpu_mode:
+      label: "GPU-Modus"
+      info: "1 GPU rechnet die Szenarien nacheinander. 2 GPUs verteilt sie parallel auf beide Karten."
+    run_btn: "Sweep starten"
+    status_label: "Status & Ergebnisse"
+    gallery_label: "Backtest-Grafiken je Szenario"
+    csv_label: "Ergebnisse als CSV"
+    cols:
+      scenario: "Szenario"
+      value: "Wert"
+      gpu: "GPU"
+      status: "Status"
+      solve_time: "Solve-Zeit"
+      sortino: "Sortino"
+      drawdown: "Max Drawdown"
+    status:
+      queued: "wartet"
+      running: "laeuft"
+      done: "fertig"
+      error: "Fehler"
+    msg:
+      running: "Sweep laeuft ..."
+      done: "Sweep abgeschlossen."
+      no_values: "Bitte mindestens einen Wert angeben."
+      one_gpu_fallback: "Nur eine GPU erkannt, es wird auf einer Karte gerechnet."
+  msg:
+    no_result: "Kein Ergebnis in {dir}. Bitte erst einen Lauf starten."
+    snap_saved: "Als Lauf {slot} gesichert ({seed})."
+    seed_none: "ohne festen Seed"
+    seed_set: "Seed {seed}"
+    need_ab: "Bitte zuerst Lauf A und Lauf B sichern."
+    compare_done: "Vergleich erstellt."
+    no_config_sel: "Keine Config ausgewaehlt."
+    loaded: "Geladen: {path}"
+    saved: "Gespeichert: {path}"
+    no_diff: "(keine Unterschiede)"
+    no_summary: "Keine run_summary.json gefunden. Lief der Solve durch?"
+    read_error: "Ergebnis konnte nicht gelesen werden: {error}"
+    run_start: "Starte Lauf ...\nDer erste Lauf laedt ggf. die Kursdaten, das dauert einen Moment.\n\n"
+    run_done: "\n[fertig]\n"
+
+en:
+  language_name: English
+  title: "## cuFOLIO Mean-CVaR control"
+  subtitle: "Set parameters, save a config, start a run, compare and sweep scenarios."
+  lang_label: "Language"
+  sec_data: "### Data & runtime"
+  sec_cvar: "### Mean-CVaR parameters"
+  sec_solver: "### Solver"
+  sec_config: "### Configuration"
+  sec_run: "### Run"
+  sec_results: "### Results"
+  cmp_header: "## Compare two runs"
+  cmp_intro: "Workflow: start a run and save it as Run A. Change a parameter, run again, save it as Run B. Then compare. With a fixed seed, differences come only from the parameters, not from randomness."
+  tabs:
+    single: "Single run"
+    sweep: "Sweep"
+  btn:
+    load: "Load"
+    save: "Save as YAML"
+    gpu_check: "Check GPU"
+    run: "Start run"
+    snap_a: "Current result -> Run A"
+    snap_b: "Current result -> Run B"
+    compare: "Compare A and B"
+  fields:
+    dataset:
+      label: "Dataset"
+      info: "Which basket of stocks is optimized. sp500 are the 500 largest US companies, dow30 and sp100 are smaller, global_titans is international."
+    num_scen:
+      label: "KDE scenarios (num_scen)"
+      info: "Number of simulated price futures. More scenarios give a more stable estimate but take longer. 10000 is a good default."
+    seed:
+      label: "Seed (empty = random)"
+      info: "Fixed starting value for randomness. The same seed gives the same result. Leave empty for a fresh random draw each time."
+    regime_start:
+      label: "Optimization start"
+      info: "Start of the period whose historical returns are used for the optimization. This is where the model learns how the stocks behave."
+    regime_end:
+      label: "Optimization end"
+      info: "End of the optimization period."
+    test_start:
+      label: "Backtest start"
+      info: "Start of the backtest. From here the finished portfolio is checked against later prices that were not seen during optimization."
+    test_end:
+      label: "Backtest end"
+      info: "End of the backtest."
+    gpu:
+      label: "GPU"
+      info: "Which graphics card to compute on. Auto keeps both visible. A single run only needs one card."
+    no_backtest:
+      label: "Skip backtest"
+      info: "If enabled, only the optimization runs and no backtest. Faster, but without a backtest chart."
+    results_dir:
+      label: "Output directory"
+      info: "Folder for the result files: portfolio, chart and summary."
+    w_min_others:
+      label: "w_min (others)"
+      info: "Smallest allowed weight per stock as a share of capital. Negative means shorting is allowed, betting on falling prices. Applies to all stocks without their own rule."
+    w_max_others:
+      label: "w_max (others)"
+      info: "Largest allowed weight per stock as a share of capital. 0.4 means at most 40 percent in a single name."
+    overrides_text:
+      label: "Ticker overrides (per line: TICKER min max)"
+      info: "Custom limits for individual stocks. One per line: symbol min max. Example: NVDA 0.1 0.6 allows NVDA between 10 and 60 percent."
+    c_min:
+      label: "Cash min (c_min)"
+      info: "Minimum share of cash that stays uninvested."
+    c_max:
+      label: "Cash max (c_max)"
+      info: "Maximum share of cash. 0.2 allows up to 20 percent cash."
+    l_tar:
+      label: "Leverage (L_tar)"
+      info: "Leverage target. Sum of all position sizes relative to capital. 1.6 means 160 percent gross exposure from long and short combined."
+    t_tar:
+      label: "Turnover (T_tar, empty = off)"
+      info: "Turnover target, how much rebalancing is allowed. Empty means no limit."
+    cvar_limit:
+      label: "CVaR limit (empty = off)"
+      info: "Optional hard cap on the loss risk CVaR. Empty means no fixed cap, risk is then steered via risk aversion."
+    cardinality:
+      label: "Cardinality (empty = off)"
+      info: "Optional cap on the number of held stocks. Empty means unlimited."
+    risk_aversion:
+      label: "Risk aversion"
+      info: "How strongly risk is penalized. Higher is more cautious with less fluctuation, lower is more return oriented."
+    confidence:
+      label: "Confidence (alpha)"
+      info: "CVaR confidence. Defines which bad days are considered. 0.95 are the worst 5 percent of days, 0.99 only the most extreme 1 percent."
+    solver_method:
+      label: "Method"
+      info: "The method cuOpt uses to solve the problem on the GPU. PDLP is the default."
+    time_limit:
+      label: "Time limit (s)"
+      info: "Maximum solver runtime in seconds."
+    optimality:
+      label: "Optimality"
+      info: "Required accuracy of the solution. Smaller is more accurate but can take longer."
+    config_dropdown:
+      label: "Saved configs"
+      info: "Saved configurations. Select one and click Load to restore it."
+    config_name:
+      label: "Name to save"
+      info: "Name under which the current settings are saved as YAML."
+  out:
+    log: "Log"
+    positions: "Optimized portfolio"
+    backtest: "Backtest"
+    plot: "Backtest chart"
+    cmp_config: "Configuration differences"
+    cmp_positions: "Portfolio comparison"
+    cmp_backtest: "Backtest comparison"
+    cmp_img_a: "Run A"
+    cmp_img_b: "Run B"
+  tbl:
+    asset: "Asset"
+    direction: "Direction"
+    weight: "Weight"
+    portfolio: "Portfolio"
+    sortino: "Sortino"
+    drawdown: "Max Drawdown"
+    cash_name: "Cash"
+    cash_dir: "Liquidity"
+    weight_a: "Weight A"
+    weight_b: "Weight B"
+    diff: "Difference (B-A)"
+    parameter: "Parameter"
+    metric: "Metric"
+    run_a: "Run A"
+    run_b: "Run B"
+  sweep:
+    header: "## Scenario sweep"
+    intro: "Vary one parameter across several values and start all runs at once. With two GPUs the jobs run in parallel. This pays off mainly for many or compute-heavy scenarios. A single solve finishes in seconds anyway. The base is the settings from the Single run tab."
+    param:
+      label: "Vary parameter"
+      info: "Which parameter is swept across the value list. Its meaning is shown next to the field in the Single run tab."
+    values:
+      label: "Values (comma separated)"
+      info: "List of values for the chosen parameter. Example: 0.90, 0.95, 0.99"
+    gpu_mode:
+      label: "GPU mode"
+      info: "1 GPU runs the scenarios one after another. 2 GPUs spreads them in parallel across both cards."
+    run_btn: "Start sweep"
+    status_label: "Status & results"
+    gallery_label: "Backtest charts per scenario"
+    csv_label: "Results as CSV"
+    cols:
+      scenario: "Scenario"
+      value: "Value"
+      gpu: "GPU"
+      status: "Status"
+      solve_time: "Solve time"
+      sortino: "Sortino"
+      drawdown: "Max Drawdown"
+    status:
+      queued: "queued"
+      running: "running"
+      done: "done"
+      error: "error"
+    msg:
+      running: "Sweep running ..."
+      done: "Sweep finished."
+      no_values: "Please provide at least one value."
+      one_gpu_fallback: "Only one GPU detected, running on a single card."
+  msg:
+    no_result: "No result in {dir}. Please start a run first."
+    snap_saved: "Saved as Run {slot} ({seed})."
+    seed_none: "without a fixed seed"
+    seed_set: "seed {seed}"
+    need_ab: "Please save Run A and Run B first."
+    compare_done: "Comparison created."
+    no_config_sel: "No config selected."
+    loaded: "Loaded: {path}"
+    saved: "Saved: {path}"
+    no_diff: "(no differences)"
+    no_summary: "No run_summary.json found. Did the solve finish?"
+    read_error: "Could not read result: {error}"
+    run_start: "Starting run ...\nThe first run may download the price data, which takes a moment.\n\n"
+    run_done: "\n[done]\n"

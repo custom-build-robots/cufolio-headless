@@ -1,0 +1,33 @@
+# Beispiel-Konfiguration fuer run_cvar.py und die Gradio-App (app.py).
+# Starten mit:  uv run python run_cvar.py --config config.example.yaml
+# Fehlende Schluessel werden automatisch mit den Defaults aufgefuellt.
+
+# --- Daten & Laufzeit ---
+dataset: sp500            # sp500, sp100, dow30, global_titans
+num_scen: 10000           # Anzahl KDE-Szenarien
+regime_start: "2021-01-01"  # Optimierungszeitraum Start
+regime_end: "2024-01-01"    # Optimierungszeitraum Ende
+test_start: "2023-09-01"    # Backtest-Zeitraum Start
+test_end: "2024-07-01"      # Backtest-Zeitraum Ende
+results_dir: results/run_cvar
+no_backtest: false
+gpu_id: null              # null = beide sichtbar, sonst 0 oder 1
+
+# --- Mean-CVaR-Parameter ---
+w_min_others: -0.3        # untere Gewichts-Grenze (alle ausser Overrides)
+w_max_others: 0.4         # obere Gewichts-Grenze (alle ausser Overrides)
+ticker_overrides:         # pro Titel [min, max]
+  NVDA: [0.1, 0.6]
+c_min: 0.0                # Cash-Untergrenze
+c_max: 0.2                # Cash-Obergrenze
+L_tar: 1.6                # Leverage-Ziel
+T_tar: null               # Turnover-Ziel (null = aus)
+cvar_limit: null          # harte CVaR-Grenze (null = unbeschraenkt)
+cardinality: null         # max. Anzahl Titel (null = aus)
+risk_aversion: 1
+confidence: 0.95          # CVaR-Konfidenz (alpha)
+
+# --- Solver ---
+solver_method: PDLP
+time_limit: 15            # Sekunden
+optimality: 0.0001
